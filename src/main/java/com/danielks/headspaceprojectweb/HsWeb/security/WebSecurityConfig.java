@@ -13,6 +13,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:4200")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
-                .exposedHeaders("Access-Control-Allow-Origin"); // Expondo o cabeçalho necessário
+                .exposedHeaders("Access-Control-Allow-Origin");
     }
 }

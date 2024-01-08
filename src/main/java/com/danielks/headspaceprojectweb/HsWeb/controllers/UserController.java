@@ -1,6 +1,8 @@
 package com.danielks.headspaceprojectweb.HsWeb.controllers;
 
+import com.danielks.headspaceprojectweb.HsWeb.models.PostDTO;
 import com.danielks.headspaceprojectweb.HsWeb.models.UserDTO;
+import com.danielks.headspaceprojectweb.HsWeb.services.PostService;
 import com.danielks.headspaceprojectweb.HsWeb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PostService postService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -68,5 +72,12 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/{userId}/posts")
+    public ResponseEntity<List<PostDTO>> getPostsByUserId(@PathVariable UUID userId) {
+        List<PostDTO> posts = postService.getPostsByUserId(userId);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
 
 }

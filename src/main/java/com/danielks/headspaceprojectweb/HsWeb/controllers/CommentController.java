@@ -35,6 +35,12 @@ public class CommentController {
         }
     }
 
+    @GetMapping("/commentsByPostId/{postId}")
+    public ResponseEntity<List<CommentDTO>> getCommentsByPostId(@PathVariable UUID postId) {
+        List<CommentDTO> comments = commentService.commentsByPostId(postId);
+        return ResponseEntity.ok(comments);
+    }
+
     @PostMapping
     public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO CommentDTO) {
         CommentDTO createdComment = commentService.createComment(CommentDTO);

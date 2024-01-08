@@ -96,4 +96,11 @@ public class PostService {
     }
 
 
+    public List<PostDTO> getPostsByUserId(UUID userId) {
+        List<Post> posts = postRepository.findByUserId(userId);
+        return posts.stream()
+                .map(this::convertToDTO) // Utiliza o método de conversão de Post para PostDTO
+                .collect(Collectors.toList());
+    }
+
 }

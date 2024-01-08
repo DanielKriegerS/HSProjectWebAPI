@@ -16,7 +16,7 @@ public abstract class User {
     private String userName;
     private String passHash;
     private Long phone;
-    private String adress;
+    private String address;
     private String email;
     private int age;
     private LocalDateTime create_time;
@@ -24,12 +24,12 @@ public abstract class User {
     public User() {
     }
 
-    public User(UUID id, String userName, String passHash, Long phone, String adress, String email, int age, LocalDateTime create_time) {
+    public User(UUID id, String userName, String passHash, Long phone, String address, String email, int age, LocalDateTime create_time) {
         this.id = id;
         this.userName = userName;
         this.passHash = passHash;
         this.phone = phone;
-        this.adress = adress;
+        this.address = address;
         this.email = email;
         this.age = age;
         this.create_time = create_time;
@@ -66,12 +66,12 @@ public abstract class User {
         this.phone = phone;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {

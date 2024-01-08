@@ -56,6 +56,13 @@
             }
         }
 
+        public List<CommentDTO> commentsByPostId(UUID postId) {
+            List<Comment> comments = commentRepository.commentsByPostId(postId);
+            return comments.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+        }
+
         public CommentDTO createComment(CommentDTO commentDTO) {
             if (commentDTO.getBody() == null || commentDTO.getUser() == null || commentDTO.getPost() == null) {
                 throw new InvalidRequestException("Body, user, or post cannot be null for creating a comment");

@@ -32,7 +32,7 @@ public class UserService {
         userDTO.setUserName(user.getUserName());
         userDTO.setPassHash(user.getPassHash());
         userDTO.setPhone(user.getPhone());
-        userDTO.setAdress(user.getAdress());
+        userDTO.setAddress(user.getAddress());
         userDTO.setEmail(user.getEmail());
         userDTO.setAge(user.getAge());
         userDTO.setCreate_time(user.getCreate_time());
@@ -91,7 +91,7 @@ public class UserService {
             }
 
             existingUser.setPhone(updatedUserDTO.getPhone());
-            existingUser.setAdress(updatedUserDTO.getAdress());
+            existingUser.setAddress(updatedUserDTO.getAddress());
             existingUser.setEmail(updatedUserDTO.getEmail());
             existingUser.setAge(updatedUserDTO.getAge());
 

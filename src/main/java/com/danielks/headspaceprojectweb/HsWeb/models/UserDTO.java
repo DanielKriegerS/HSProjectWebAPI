@@ -15,7 +15,7 @@ public class UserDTO {
     @NotBlank(message = "O telefone não pode estar em branco!")
     private Long phone;
     @NotBlank(message = "O endereço não pode estar em branco!")
-    private String adress;
+    private String address;
     @NotBlank(message = "O email não pode estar em branco!")
     private String email;
     @NotBlank(message = "A idade não pode estar em branco!")
@@ -56,12 +56,12 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {
