@@ -1,5 +1,6 @@
 package com.danielks.headspaceprojectweb.HsWeb.models;
 
+import com.danielks.headspaceprojectweb.HsWeb.entities.roles.UserRoles;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,6 +11,8 @@ public class UserDTO {
     private UUID id;
     @NotBlank(message = "O nome não pode estar em branco!")
     private String userName;
+    @NotBlank(message = "O login não pode estar em branco!")
+    private  String userLogin;
     @NotBlank(message = "A senha não pode estar em branco!")
     private String passHash;
     @NotBlank(message = "O telefone não pode estar em branco!")
@@ -21,7 +24,7 @@ public class UserDTO {
     @NotBlank(message = "A idade não pode estar em branco!")
     private int age;
     @NotNull
-    private String User_type;
+    private UserRoles user_role;
     private LocalDateTime create_time;
 
     public UUID getId() {
@@ -38,6 +41,14 @@ public class UserDTO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public String getPassHash() {
@@ -80,12 +91,12 @@ public class UserDTO {
         this.age = age;
     }
 
-    public String getUser_type() {
-        return User_type;
+    public UserRoles getUser_role() {
+        return user_role;
     }
 
-    public void setUser_type(String User_type) {
-        this.User_type = User_type;
+    public void setUser_role(UserRoles user_role) {
+        this.user_role = user_role;
     }
 
     public LocalDateTime getCreate_time() {

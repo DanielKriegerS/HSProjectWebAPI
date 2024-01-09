@@ -1,30 +1,35 @@
 package com.danielks.headspaceprojectweb.HsWeb.entities;
 
+import com.danielks.headspaceprojectweb.HsWeb.entities.roles.UserRoles;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "tb_users")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-public abstract class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String userName;
+    private String userLogin;
     private String passHash;
     private Long phone;
     private String address;
     private String email;
     private int age;
     private LocalDateTime create_time;
+    private UserRoles user_role;
 
     public User() {
     }
 
-    public User(UUID id, String userName, String passHash, Long phone, String address, String email, int age, LocalDateTime create_time) {
+    public User(UUID id, String userName, String userLogin, String passHash, Long phone, String address, String email, int age, LocalDateTime create_time, UserRoles user_role) {
         this.id = id;
         this.userName = userName;
         this.passHash = passHash;
@@ -33,6 +38,8 @@ public abstract class User {
         this.email = email;
         this.age = age;
         this.create_time = create_time;
+        this.user_role = user_role;
+        this.userLogin = userLogin;
     }
     public UUID getId() {
         return id;
@@ -48,6 +55,14 @@ public abstract class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public String getPassHash() {
@@ -96,5 +111,63 @@ public abstract class User {
 
     public void setCreate_time(LocalDateTime create_time) {
         this.create_time = create_time;
+    }
+
+    public UserRoles getUser_role() {
+        return user_role;
+    }
+
+    public void setUser_role(UserRoles user_role) {
+        this.user_role = user_role;
+    }
+
+    private static final Map<UserRoles, List<String>> ROLE_PERMISSIONS_MAP = Map.of(
+            UserRoles.ADMIN, Arrays.asList("ROLE_ADMIN", "ROLE_PAYINGUSER", "ROLE_STANDARDUSER"),
+            UserRoles.PAYINGUSER, Arrays.asList("ROLE_PAYINGUSER", "ROLE_STANDARDUSER"),
+            UserRoles.STANDARDUSER, Collections.singletonList("ROLE_STANDARDUSER"),
+            UserRoles.USER, Collections.singletonList("ROLE_USER")
+    );
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<String> authorities = ROLE_PERMISSIONS_MAP.getOrDefault(this.user_role, Collections.emptyList());
+        return translateToGrantedAuthorities(authorities);
+    }
+
+    private Collection<? extends GrantedAuthority> translateToGrantedAuthorities(List<String> authorities) {
+        return authorities.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

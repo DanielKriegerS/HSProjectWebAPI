@@ -1,10 +1,6 @@
 package com.danielks.headspaceprojectweb.HsWeb.services;
 
 import com.danielks.headspaceprojectweb.HsWeb.entities.User;
-import com.danielks.headspaceprojectweb.HsWeb.entities.user_types.PayingUser;
-import com.danielks.headspaceprojectweb.HsWeb.entities.user_types.StandardUser;
-import com.danielks.headspaceprojectweb.HsWeb.entities.user_types.SuperUser;
-import com.danielks.headspaceprojectweb.HsWeb.entities.user_types.Visitor;
 import com.danielks.headspaceprojectweb.HsWeb.exceptions.user.UserNotFoundException;
 import com.danielks.headspaceprojectweb.HsWeb.models.UserDTO;
 import com.danielks.headspaceprojectweb.HsWeb.repositories.UserRepository;
@@ -36,6 +32,7 @@ public class UserService {
         userDTO.setEmail(user.getEmail());
         userDTO.setAge(user.getAge());
         userDTO.setCreate_time(user.getCreate_time());
+        userDTO.setUserLogin(user.getUserLogin());
         return userDTO;
     }
 
@@ -64,20 +61,22 @@ public class UserService {
         return convertToDTO(user);
     }
 
-    private User createUserFromDTO(UserDTO userDTO) {
-        switch (userDTO.getUser_type()) {
-            case "visitor":
-                return new Visitor();
-            case "standarduser":
-                return new StandardUser();
-            case "payinguser":
-                return new PayingUser();
-            case "superuser":
-                return new SuperUser();
-            default:
-                throw new IllegalArgumentException("Tipo de usuário inválido: " + userDTO.getUser_type());
-        }
+    public User createUserFromDTO(UserDTO userDTO) {
+        User user = new User();
+
+        user.setUserName(userDTO.getUserName());
+        user.setPassHash(userDTO.getPassHash());
+        user.setPhone(userDTO.getPhone());
+        user.setAddress(userDTO.getAddress());
+        user.setEmail(userDTO.getEmail());
+        user.setAge(userDTO.getAge());
+        user.setUserLogin(userDTO.getUserLogin());
+
+        user.setUser_role(userDTO.getUser_role());
+
+        return user;
     }
+
 
     public UserDTO updateUser(UUID id, UserDTO updatedUserDTO) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -94,6 +93,7 @@ public class UserService {
             existingUser.setAddress(updatedUserDTO.getAddress());
             existingUser.setEmail(updatedUserDTO.getEmail());
             existingUser.setAge(updatedUserDTO.getAge());
+            existingUser.setUserLogin(updatedUserDTO.getUserLogin());
 
             existingUser = (User) userRepository.save(existingUser);
             return convertToDTO(existingUser);

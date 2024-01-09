@@ -1,10 +1,6 @@
 package com.danielks.headspaceprojectweb.HsWeb.entities;
 
-import com.danielks.headspaceprojectweb.HsWeb.entities.user_types.PayingUser;
-import com.danielks.headspaceprojectweb.HsWeb.entities.user_types.StandardUser;
-import com.danielks.headspaceprojectweb.HsWeb.entities.user_types.SuperUser;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Any;
 
 import java.time.LocalDate;
 import java.util.UUID;
