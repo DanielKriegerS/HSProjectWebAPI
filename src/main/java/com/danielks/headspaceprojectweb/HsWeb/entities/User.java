@@ -29,6 +29,12 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(String userLogin, String passHash, UserRoles user_role) {
+        this.userLogin = userLogin;
+        this.passHash = passHash;
+        this.user_role = user_role;
+    }
+
     public User(UUID id, String userName, String userLogin, String passHash, Long phone, String address, String email, int age, LocalDateTime create_time, UserRoles user_role) {
         this.id = id;
         this.userName = userName;
