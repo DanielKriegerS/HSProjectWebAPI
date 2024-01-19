@@ -13,31 +13,32 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 @Service
 public class PostService {
     @Autowired
     private PostRepository postRepository;
 
     private PostDTO convertToDTO(Post post) {
-        PostDTO postDTO = new PostDTO();
-        postDTO.setId(post.getId());
-        postDTO.setUser(post.getUser());
-        postDTO.setHeader(post.getHeader());
-        postDTO.setDesc(post.getDesc());
-        postDTO.setBody(post.getBody());
-        postDTO.setCreate_time(post.getCreate_time());
-        return postDTO;
+        return new PostDTO(
+                post.getId(),
+                post.getUser(),
+                post.getHeader(),
+                post.getDesc(),
+                post.getBody(),
+                post.getCreate_time()
+        );
     }
 
     private Post convertToEntity(PostDTO postDTO) {
-        Post post = new Post();
-        post.setId(postDTO.getId());
-        post.setUser(postDTO.getUser());
-        post.setHeader(postDTO.getHeader());
-        post.setDesc(postDTO.getDesc());
-        post.setBody(postDTO.getBody());
-        post.setCreate_time(postDTO.getCreate_time());
-        return post;
+        return new Post(
+                postDTO.id(),
+                postDTO.user(),
+                postDTO.header(),
+                postDTO.desc(),
+                postDTO.body(),
+                postDTO.create_time()
+        );
     }
 
     public List<PostDTO> getAllPosts() {
@@ -58,14 +59,14 @@ public class PostService {
     }
 
     public PostDTO createPost(PostDTO postDTO) {
-        if (postDTO.getHeader() == null || postDTO.getDesc() == null || postDTO.getBody() == null) {
+        if (postDTO.header() == null || postDTO.desc() == null || postDTO.body() == null) {
             throw new InvalidRequestException("Header, Description, or Body cannot be null for creating a post");
         }
 
         Post post = convertToEntity(postDTO);
         post.setCreate_time(LocalDate.now());
 
-        post = (Post) postRepository.save(post);
+        post = postRepository.save(post);
         return convertToDTO(post);
     }
 
@@ -75,32 +76,31 @@ public class PostService {
         if (optionalPost.isPresent()) {
             Post existingPost = optionalPost.get();
 
-            if (updatedPostDTO.getHeader() != null) {
-                existingPost.setHeader(updatedPostDTO.getHeader());
+            if (updatedPostDTO.header() != null) {
+                existingPost.setHeader(updatedPostDTO.header());
             }
-            if (updatedPostDTO.getDesc() != null) {
-                existingPost.setDesc(updatedPostDTO.getDesc());
+            if (updatedPostDTO.desc() != null) {
+                existingPost.setDesc(updatedPostDTO.desc());
             }
-            if (updatedPostDTO.getBody() != null) {
-                existingPost.setBody(updatedPostDTO.getBody());
+            if (updatedPostDTO.body() != null) {
+                existingPost.setBody(updatedPostDTO.body());
             }
 
-            existingPost = (Post) postRepository.save(existingPost);
+            existingPost = postRepository.save(existingPost);
             return convertToDTO(existingPost);
         } else {
             throw new PostNotFoundException(id);
         }
     }
+
     public void deletePost(UUID id) {
         postRepository.deleteById(id);
     }
 
-
     public List<PostDTO> getPostsByUserId(UUID userId) {
         List<Post> posts = postRepository.findByUserId(userId);
         return posts.stream()
-                .map(this::convertToDTO) // Utiliza o método de conversão de Post para PostDTO
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-
 }

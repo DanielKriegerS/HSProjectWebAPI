@@ -3,6 +3,7 @@ package com.danielks.headspaceprojectweb.HsWeb.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +34,19 @@ public class Comment {
         this.post = post;
         this.body = body;
         this.create_time = create_time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return id.equals(comment.id) && user.equals(comment.user) && post.equals(comment.post);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, post);
     }
 
     public UUID getId() {

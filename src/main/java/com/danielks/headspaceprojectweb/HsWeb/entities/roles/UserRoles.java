@@ -1,10 +1,10 @@
 package com.danielks.headspaceprojectweb.HsWeb.entities.roles;
 
 public enum UserRoles {
-    ADMIN("admin"),
-    PAYINGUSER("payinguser"),
-    STANDARDUSER("standarduser"),
-    USER("user");
+    ADMIN("ADMIN"),
+    PAYINGUSER("PAYINGUSER"),
+    STANDARDUSER("STANDARDUSER"),
+    USER("USER");
 
     private String user_role;
 

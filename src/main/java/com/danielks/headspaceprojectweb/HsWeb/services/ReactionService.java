@@ -20,25 +20,25 @@ public class ReactionService {
     private ReactionRepository reactionRepository;
 
     private ReactionDTO convertToDTO(Reaction reaction) {
-        ReactionDTO reactionDTO = new ReactionDTO();
-        reactionDTO.setId(reaction.getId());
-        reactionDTO.setUser(reaction.getUser());
-        reactionDTO.setEntityId(reaction.getEntityId());
-        reactionDTO.setEntity_type(reaction.getEntity_type());
-        reactionDTO.setReact_type(reaction.getReact_type());
-        reactionDTO.setCreate_time(reaction.getCreate_time());
-        return reactionDTO;
+        return new ReactionDTO(
+                reaction.getId(),
+                reaction.getUser(),
+                reaction.getEntityId(),
+                reaction.getEntity_type(),
+                reaction.getReact_type(),
+                reaction.getCreate_time()
+        );
     }
 
     private Reaction convertToEntity(ReactionDTO reactionDTO) {
-        Reaction reaction = new Reaction();
-        reaction.setId(reactionDTO.getId());
-        reaction.setUser(reactionDTO.getUser());
-        reaction.setEntityId(reactionDTO.getEntityId());
-        reaction.setEntity_type(reactionDTO.getEntity_type());
-        reaction.setReact_type(reactionDTO.getReact_type());
-        reaction.setCreate_time(reactionDTO.getCreate_time());
-        return reaction;
+        return new Reaction(
+                reactionDTO.id(),
+                reactionDTO.user(),
+                reactionDTO.entityId(),
+                reactionDTO.entity_type(),
+                reactionDTO.react_type(),
+                reactionDTO.create_time()
+        );
     }
 
     public List<ReactionDTO> getAllReactions() {
@@ -54,7 +54,7 @@ public class ReactionService {
         if (reactionOptional.isPresent()) {
             return reactionOptional.map(this::convertToDTO);
         } else {
-            throw new ReactionNotFoundException(id); // Lança a exceção se a reação não for encontrada
+            throw new ReactionNotFoundException(id);
         }
     }
 
@@ -62,7 +62,7 @@ public class ReactionService {
         Reaction reaction = convertToEntity(reactionDTO);
         reaction.setCreate_time(LocalDate.now());
 
-        reaction = (Reaction) reactionRepository.save(reaction);
+        reaction = reactionRepository.save(reaction);
         return convertToDTO(reaction);
     }
 
@@ -71,19 +71,26 @@ public class ReactionService {
 
         if (optionalReactionDTO.isPresent()) {
             ReactionDTO existingReactionDTO = optionalReactionDTO.get();
-            existingReactionDTO.setReact_type(updatedReactType);
+            existingReactionDTO = new ReactionDTO(
+                    existingReactionDTO.id(),
+                    existingReactionDTO.user(),
+                    existingReactionDTO.entityId(),
+                    existingReactionDTO.entity_type(),
+                    updatedReactType,
+                    existingReactionDTO.create_time()
+            );
 
             return createReaction(existingReactionDTO);
         }
 
         throw new InvalidRequestException("Reaction with ID " + reactionId + " does not exist");
     }
-    public UUID countReactionsByentityId(UUID entityId) {
+
+    public UUID countReactionsByEntityId(UUID entityId) {
         return reactionRepository.countByEntityId(entityId);
     }
 
     public void deleteReaction(UUID id) {
         reactionRepository.deleteById(id);
     }
-
 }

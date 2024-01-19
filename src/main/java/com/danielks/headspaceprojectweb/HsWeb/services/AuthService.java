@@ -14,6 +14,6 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userLogin) throws UsernameNotFoundException {
-        return repository.findByUserLogin(userLogin);
+        return repository.findByuserLogin(userLogin);
     }
 }

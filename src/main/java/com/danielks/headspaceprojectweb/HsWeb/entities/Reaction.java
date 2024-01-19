@@ -3,6 +3,7 @@ package com.danielks.headspaceprojectweb.HsWeb.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +31,19 @@ public class Reaction {
         this.entity_type = entity_type;
         this.react_type = react_type;
         this.create_time = create_time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reaction reaction = (Reaction) o;
+        return id.equals(reaction.id) && user.equals(reaction.user) && entityId.equals(reaction.entityId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, entityId);
     }
 
     public UUID getId() {

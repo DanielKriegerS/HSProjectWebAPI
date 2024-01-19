@@ -19,8 +19,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private PostService postService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -39,29 +37,6 @@ public class UserController {
         }
     }
 
-
-    @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        UserDTO createdUser = userService.createUser(userDTO);
-
-        if (createdUser != null) {
-            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable UUID id, @RequestBody UserDTO updatedUserDTO) {
-        UserDTO updatedUser = userService.updateUser(id, updatedUserDTO);
-
-        if (updatedUser != null) {
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         boolean userExists = userService.getUserById(id).isPresent();
@@ -72,12 +47,5 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    @GetMapping("/{userId}/posts")
-    public ResponseEntity<List<PostDTO>> getPostsByUserId(@PathVariable UUID userId) {
-        List<PostDTO> posts = postService.getPostsByUserId(userId);
-        return new ResponseEntity<>(posts, HttpStatus.OK);
-    }
-
 
 }

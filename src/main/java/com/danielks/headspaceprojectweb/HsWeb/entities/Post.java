@@ -1,8 +1,10 @@
 package com.danielks.headspaceprojectweb.HsWeb.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +31,19 @@ public class Post {
         this.desc = desc;
         this.body = body;
         this.create_time = create_time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id.equals(post.id) && user.equals(post.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user);
     }
 
     public UUID getId() {

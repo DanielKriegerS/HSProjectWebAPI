@@ -1,6 +1,7 @@
 package com.danielks.headspaceprojectweb.HsWeb.entities;
 
 import com.danielks.headspaceprojectweb.HsWeb.entities.roles.UserRoles;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,9 @@ public class User implements UserDetails {
     private String email;
     private int age;
     private LocalDateTime create_time;
+    @Enumerated(EnumType.STRING)
     private UserRoles user_role;
+
 
     public User() {
     }
@@ -47,6 +50,20 @@ public class User implements UserDetails {
         this.user_role = user_role;
         this.userLogin = userLogin;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public UUID getId() {
         return id;
     }
