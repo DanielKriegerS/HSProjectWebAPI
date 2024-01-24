@@ -49,6 +49,30 @@ public class UserService {
         }
     }
 
+    public UserDTO updateUser(UUID id, UserDTO updatedUserDTO) {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            User userToUpdate = optionalUser.get();
+
+            // Atualize os campos necessários com os valores de updatedUserDTO
+            userToUpdate.setUserName(updatedUserDTO.userName());
+            userToUpdate.setUserLogin(updatedUserDTO.userLogin());
+            userToUpdate.setPassHash(updatedUserDTO.passHash());
+            userToUpdate.setPhone(updatedUserDTO.phone());
+            userToUpdate.setAddress(updatedUserDTO.address());
+            userToUpdate.setEmail(updatedUserDTO.email());
+            userToUpdate.setAge(updatedUserDTO.age());
+            userToUpdate.setUser_role(updatedUserDTO.user_role());
+
+            // ... outros campos, se necessário
+
+            User updatedUser = userRepository.save(userToUpdate);
+            return convertToDTO(updatedUser);
+        } else {
+            throw new UserNotFoundException(id);
+        }
+    }
     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public record PostDTO(
         UUID id,
-        @NotNull User user,
+        @NotNull UUID userId,
         @NotBlank(message = "O cabeçalho não pode estar em branco!") String header,
         @NotBlank(message = "A descrição não pode estar em branco!") String desc,
         @NotBlank(message = "O corpo não pode estar em branco!") String body,

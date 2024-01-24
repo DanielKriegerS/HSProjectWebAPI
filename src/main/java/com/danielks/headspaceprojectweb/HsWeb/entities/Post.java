@@ -1,6 +1,5 @@
 package com.danielks.headspaceprojectweb.HsWeb.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,9 +12,8 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @Column(name = "user_id")
+    private UUID userId;
     private String header;
     private String desc;
     private String body;
@@ -24,9 +22,9 @@ public class Post {
     public Post() {
     }
 
-    public Post(UUID id, User user, String header, String desc, String body, LocalDate create_time) {
+    public Post(UUID id, UUID userId, String header, String desc, String body, LocalDate create_time) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.header = header;
         this.desc = desc;
         this.body = body;
@@ -38,12 +36,12 @@ public class Post {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return id.equals(post.id) && user.equals(post.user);
+        return id.equals(post.id) && userId.equals(post.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user);
+        return Objects.hash(id, userId);
     }
 
     public UUID getId() {
@@ -54,12 +52,12 @@ public class Post {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getHeader() {

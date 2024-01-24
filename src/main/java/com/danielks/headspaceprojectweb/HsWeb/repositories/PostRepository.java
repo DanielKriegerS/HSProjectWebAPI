@@ -1,7 +1,6 @@
 package com.danielks.headspaceprojectweb.HsWeb.repositories;
 
 import com.danielks.headspaceprojectweb.HsWeb.entities.Post;
-import com.danielks.headspaceprojectweb.HsWeb.models.PostDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -22,7 +22,7 @@ public class PostService {
     private PostDTO convertToDTO(Post post) {
         return new PostDTO(
                 post.getId(),
-                post.getUser(),
+                post.getUserId(),
                 post.getHeader(),
                 post.getDesc(),
                 post.getBody(),
@@ -33,7 +33,7 @@ public class PostService {
     private Post convertToEntity(PostDTO postDTO) {
         return new Post(
                 postDTO.id(),
-                postDTO.user(),
+                postDTO.userId(),
                 postDTO.header(),
                 postDTO.desc(),
                 postDTO.body(),

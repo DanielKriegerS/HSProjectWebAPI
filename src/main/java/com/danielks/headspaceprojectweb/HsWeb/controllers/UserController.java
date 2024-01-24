@@ -37,6 +37,18 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable UUID id, @RequestBody UserDTO updatedUserDTO) {
+        Optional<UserDTO> existingUser = userService.getUserById(id);
+
+        if (existingUser.isPresent()) {
+            UserDTO updatedUser = userService.updateUser(id, updatedUserDTO);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         boolean userExists = userService.getUserById(id).isPresent();

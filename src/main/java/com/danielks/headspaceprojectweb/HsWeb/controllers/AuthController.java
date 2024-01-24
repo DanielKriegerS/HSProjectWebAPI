@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.danielks.headspaceprojectweb.HsWeb.entities.User;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("auth")
 public class AuthController {
@@ -34,19 +38,32 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<Map<String, Object>> register(@RequestBody @Valid RegisterDTO data) {
         if (this.repository.findByuserLogin(data.userLogin()) != null) {
-            return ResponseEntity.badRequest().body("Usuário já registrado");
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Usuário já registrado");
+            return ResponseEntity.badRequest().body(response);
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.passHash());
         User newUser = new User(data.userLogin(), encryptedPassword, data.role());
 
         try {
-            this.repository.save(newUser);
-            return ResponseEntity.ok().body("Usuário registrado com sucesso. ID: " + newUser.getId());
+            User savedUser = this.repository.save(newUser);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("userId", savedUser.getId());
+            return ResponseEntity.ok().body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro durante o registro");
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Erro durante o registro");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+
+
 }
