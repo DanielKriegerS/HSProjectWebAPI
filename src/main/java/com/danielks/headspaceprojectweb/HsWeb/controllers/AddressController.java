@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<AddressDTO> getAddressByUserId(@PathVariable UUID userId){
+    public ResponseEntity<AddressDTO> getAddressByUserId(@PathVariable UUID userId) throws Exception {
         Optional<AddressDTO> address = addressService.getAddressByUserId(userId);
 
         if(address.isPresent()){
