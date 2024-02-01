@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    private UUID id;
     @Column(name = "user_id")
     private UUID userId;
     private int number;
@@ -21,8 +21,8 @@ public class Address {
     public Address() {
     }
 
-    public Address(UUID uuid, UUID userId, int number, String district, String street, String cep) {
-        this.uuid = uuid;
+    public Address(UUID id, UUID userId, int number, String district, String street, String cep) {
+        this.id = id;
         this.userId = userId;
         this.number = number;
         this.district = district;
@@ -30,12 +30,12 @@ public class Address {
         this.cep = cep;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getUserId() {
@@ -83,11 +83,11 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return uuid.equals(address.uuid) && userId.equals(address.userId);
+        return id.equals(address.id) && userId.equals(address.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, userId);
+        return Objects.hash(id, userId);
     }
 }
