@@ -21,7 +21,7 @@ public class User implements UserDetails {
     private String userLogin;
     private String passHash;
     private Long phone;
-    private String address;
+    private UUID address;
     private String email;
     private int age;
     private LocalDateTime create_time;
@@ -38,7 +38,7 @@ public class User implements UserDetails {
         this.user_role = user_role;
     }
 
-    public User(UUID id, String userName, String userLogin, String passHash, Long phone, String address, String email, int age, LocalDateTime create_time, UserRoles user_role) {
+    public User(UUID id, String userName, String userLogin, String passHash, Long phone, UUID address, String email, int age, LocalDateTime create_time, UserRoles user_role) {
         this.id = id;
         this.userName = userName;
         this.passHash = passHash;
@@ -104,11 +104,11 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
-    public String getAddress() {
+    public UUID getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(UUID address) {
         this.address = address;
     }
 
