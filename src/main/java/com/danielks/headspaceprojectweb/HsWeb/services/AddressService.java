@@ -38,4 +38,15 @@ public class AddressService {
                 addressDTO.cep()
         );
     }
+
+
+    public Optional<AddressDTO> getAddressByUserId(UUID userId) throws Exception {
+        Optional<Address> optionalAddress = addressRepository.findByUserId(userId);
+
+        if(optionalAddress.isPresent()){
+            return optionalAddress.map(this::convertToDTO);
+        } else {
+            throw new Exception("Erro genérico!");
+        }
+    }
 }
