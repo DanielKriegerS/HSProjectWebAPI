@@ -55,7 +55,6 @@ public class UserService {
         if (optionalUser.isPresent()) {
             User userToUpdate = optionalUser.get();
 
-            // Atualize os campos necessários com os valores de updatedUserDTO
             userToUpdate.setUserName(updatedUserDTO.userName());
             userToUpdate.setUserLogin(updatedUserDTO.userLogin());
             userToUpdate.setPassHash(updatedUserDTO.passHash());
@@ -64,8 +63,6 @@ public class UserService {
             userToUpdate.setEmail(updatedUserDTO.email());
             userToUpdate.setAge(updatedUserDTO.age());
             userToUpdate.setUser_role(updatedUserDTO.user_role());
-
-            // ... outros campos, se necessário
 
             User updatedUser = userRepository.save(userToUpdate);
             return convertToDTO(updatedUser);
