@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public record AddressDTO (
         UUID id,
-        UUID addressId,
+        UUID userId,
         @NotBlank(message = "O número não pode estar em branco!") int number,
         @NotBlank(message = "O bairro não pode estar em branco!") String district,
         @NotBlank(message = "A rua não pode estar em branco!") String street,
