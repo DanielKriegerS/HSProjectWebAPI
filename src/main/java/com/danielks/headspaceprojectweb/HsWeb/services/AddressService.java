@@ -1,6 +1,9 @@
 package com.danielks.headspaceprojectweb.HsWeb.services;
 
+import com.danielks.headspaceprojectweb.HsWeb.entities.Address;
+import com.danielks.headspaceprojectweb.HsWeb.entities.User;
 import com.danielks.headspaceprojectweb.HsWeb.models.AddressDTO;
+import com.danielks.headspaceprojectweb.HsWeb.models.UserDTO;
 import com.danielks.headspaceprojectweb.HsWeb.repositories.AddressRepository;
 import com.danielks.headspaceprojectweb.HsWeb.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,5 +17,25 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
+    private AddressDTO convertToDTO(Address address) {
+        return new AddressDTO(
+                address.getId(),
+                address.getUserId(),
+                address.getNumber(),
+                address.getDistrict(),
+                address.getStreet(),
+                address.getCep()
+        );
+    }
 
+    private Address convertToEntity(AddressDTO addressDTO){
+        return new Address(
+                addressDTO.id(),
+                addressDTO.userId(),
+                addressDTO.number(),
+                addressDTO.district(),
+                addressDTO.street(),
+                addressDTO.cep()
+        );
+    }
 }
