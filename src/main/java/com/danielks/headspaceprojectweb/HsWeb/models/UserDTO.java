@@ -13,7 +13,7 @@ public record UserDTO(
         @NotBlank(message = "O login não pode estar em branco!") String userLogin,
         @NotBlank(message = "A senha não pode estar em branco!") String passHash,
         @NotBlank(message = "O telefone não pode estar em branco!") Long phone,
-        @NotBlank(message = "O endereço não pode estar em branco!") String address,
+        @NotBlank(message = "O endereço não pode estar em branco!") UUID address,
         @NotBlank(message = "O email não pode estar em branco!") String email,
         @NotBlank(message = "A idade não pode estar em branco!") int age,
         @NotNull UserRoles user_role,
