@@ -29,7 +29,7 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<AddressDTO> createPost(@RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO) {
         AddressDTO createdAddress = addressService.createAddress(addressDTO);
         return new ResponseEntity<>(createdAddress, HttpStatus.CREATED);
     }
