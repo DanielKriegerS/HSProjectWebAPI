@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public class UserNotFoundException extends EntityNotFoundException {
         public UserNotFoundException(UUID userId) {
-            super("Post with id " + userId + " not found");
+            super("User with id " + userId + " not found");
         }
 }
