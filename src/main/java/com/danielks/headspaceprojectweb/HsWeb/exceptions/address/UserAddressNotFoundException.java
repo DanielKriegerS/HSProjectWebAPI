@@ -5,7 +5,7 @@ import com.danielks.headspaceprojectweb.HsWeb.exceptions.EntityNotFoundException
 import java.util.UUID;
 
 public class UserAddressNotFoundException extends EntityNotFoundException {
-    public UserAddressNotFoundException(UUID userId, UUID id) {
-        super("User with id " + userId + " not found, or address with id " + id + " not found.");
+    public UserAddressNotFoundException(UUID userId) {
+        super("Address of user with id " + userId + " not found.");
     }
 }
