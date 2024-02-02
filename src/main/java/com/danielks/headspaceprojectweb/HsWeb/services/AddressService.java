@@ -4,6 +4,7 @@ import com.danielks.headspaceprojectweb.HsWeb.entities.Address;
 import com.danielks.headspaceprojectweb.HsWeb.entities.Post;
 import com.danielks.headspaceprojectweb.HsWeb.entities.User;
 import com.danielks.headspaceprojectweb.HsWeb.exceptions.InvalidRequestException;
+import com.danielks.headspaceprojectweb.HsWeb.exceptions.address.UserAddressNotFoundException;
 import com.danielks.headspaceprojectweb.HsWeb.models.AddressDTO;
 import com.danielks.headspaceprojectweb.HsWeb.models.UserDTO;
 import com.danielks.headspaceprojectweb.HsWeb.repositories.AddressRepository;
@@ -49,7 +50,7 @@ public class AddressService {
         if(optionalAddress.isPresent()){
             return optionalAddress.map(this::convertToDTO);
         } else {
-            throw new Exception("Erro genérico!");
+            throw new UserAddressNotFoundException(userId);
         }
     }
 
